@@ -17,7 +17,7 @@ namespace GuarderPet.API.Data
         //public DbSet<CareDescription> CareDescriptions { get; set; }
         //public DbSet<DocumentType> DocumentTypes { get; set; }
         //public DbSet<Pet> Pets { get; set; }
-        //public DbSet<PetService> PetServices { get; set; }
+        public DbSet<PetService> PetServices { get; set; }
         //public DbSet<PetServiceHistory> petServiceHistories { get; set; }
         public DbSet<PetType> PetTypes { get; set; }
         //public DbSet<PhotoPet> PhotoPets { get; set; }
@@ -29,6 +29,7 @@ namespace GuarderPet.API.Data
             base.OnModelCreating(modelBuilder);
             //modelBuilder.Entity<Breed>().HasIndex(x => x.BreedTittle).IsUnique();
             //modelBuilder.Entity<DocumentType>().HasIndex(x => x.Type).IsUnique();
+            modelBuilder.Entity<PetService>().HasIndex(x => x.ServiceDetail).IsUnique();
             modelBuilder.Entity<PetType>().HasIndex(x => x.Type).IsUnique();
         }
     }
