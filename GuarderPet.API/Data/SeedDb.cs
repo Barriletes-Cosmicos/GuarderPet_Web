@@ -21,15 +21,19 @@ namespace GuarderPet.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckRolesAsync();
+            await CheckPetTypesAsync();
             await CheckBreedsAsync();
             await CheckDocumentTypesAsync();
             await CheckPetServicesAsync();
-            await CheckPetTypesAsync();
             await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
             await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitax_solo_millos@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
-            await CheckUserAsync("101012", "Stewar", "Marin", "stewartubb@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.User);
-            await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
-            await CheckUserAsync("101014", "Megan", "Foss", "lafoss@guarderpet.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckUserAsync("101012", "Stewar", "Marin", "stewartubb@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckUserAsync("101014", "Andres", "Arango", "aa@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
+            await CheckUserAsync("101015", "Caterine", "Caminos", "catcam@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
+            await CheckUserAsync("101016", "Julio", "Cesar", "julces@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
+            await CheckUserAsync("101017", "Tulio", "Recomienda", "tulrec@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
+            await CheckUserAsync("101018", "Pablo", "Neruda", "pabner@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
         }
 
         private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
@@ -67,10 +71,70 @@ namespace GuarderPet.API.Data
         {
             if (!_context.Breeds.Any())
             {
-                _context.Breeds.Add(new Breed { BreedTittle = "Pincher" });
-                _context.Breeds.Add(new Breed { BreedTittle = "Pastor Aleman" });
-                _context.Breeds.Add(new Breed { BreedTittle = "Chihuahua" });
-                _context.Breeds.Add(new Breed { BreedTittle = "Border Collie" });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Pincher", 
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro") 
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Pastor Aleman",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Chihuahua",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Husky",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Bulldog",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Dobermann",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Poodle",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Perro")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Persa",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Angora",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Border Collie",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Siamés",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Snowshoe",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Ragdoll",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Bengalí",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Gato")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Mediterránea",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Tortuga")
+                });
+                _context.Breeds.Add(new Breed { 
+                    BreedTittle = "Rusa",
+                    PetType = _context.PetTypes.FirstOrDefault(x => x.Type == "Tortuga")
+                });
                 await _context.SaveChangesAsync();
             }
         }
@@ -91,10 +155,13 @@ namespace GuarderPet.API.Data
         {
             if (!_context.PetServices.Any())
             {
-                _context.PetServices.Add(new PetService { Price = 10000, ServiceDetail = "Pasear" });
-                _context.PetServices.Add(new PetService { Price = 20000, ServiceDetail = "Baño" });
-                _context.PetServices.Add(new PetService { Price = 30000, ServiceDetail = "Corte de uñas" });
-                _context.PetServices.Add(new PetService { Price = 40000, ServiceDetail = "Guardería" });
+                _context.PetServices.Add(new PetService { Price = 10000, ServiceDetail = "Cuidar" });
+                _context.PetServices.Add(new PetService { Price = 7000, ServiceDetail = "Baño" });
+                _context.PetServices.Add(new PetService { Price = 10000, ServiceDetail = "Corte de uñas" });
+                _context.PetServices.Add(new PetService { Price = 40000, ServiceDetail = "Desparasitación" });
+                _context.PetServices.Add(new PetService { Price = 60000, ServiceDetail = "Vacunacion" });
+                _context.PetServices.Add(new PetService { Price = 5000, ServiceDetail = "Pasear" });
+                _context.PetServices.Add(new PetService { Price = 10000, ServiceDetail = "Limpieza dental" });
                 await _context.SaveChangesAsync();
             }
         }

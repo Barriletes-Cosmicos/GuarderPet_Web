@@ -25,9 +25,6 @@ namespace GuarderPet.API.Data.Entities
         [Display(Name = "Raza")]
         public Breed Breed { get; set; }
 
-        [Display(Name = "Tipo")]
-        public PetType PetType { get; set; }
-
         //    [Display(Name = "Fotos")]
         //    public ICollection<PhotoPet> Photos { get; set; }
 
