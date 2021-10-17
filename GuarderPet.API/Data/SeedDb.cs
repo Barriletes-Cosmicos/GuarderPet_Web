@@ -21,13 +21,12 @@ namespace GuarderPet.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckRolesAsync();
-            await _context.Database.EnsureCreatedAsync();
             await CheckBreedsAsync();
             await CheckDocumentTypesAsync();
             await CheckPetServicesAsync();
             await CheckPetTypesAsync();
-            await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Admin);
-            await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitax_solo_millos@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Admin);
+            await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitax_solo_millos@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
             await CheckUserAsync("101012", "Stewar", "Marin", "stewartubb@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101014", "Megan", "Foss", "lafoss@guarderpet.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
@@ -40,18 +39,19 @@ namespace GuarderPet.API.Data
             {
                 user = new User
                 {
+                    Address = address,
+                    Document = document,
+                    DocumentType = _context.DocumentTypes.FirstOrDefault(x => x.Type == "Cédula"),
                     Email = email,
                     FirstName = firstName,
                     LastName = lastName,
-                    Document = document,
                     PhoneNumber = phoneNumber,
-                    Address = address,
-                    DocumentType = _context.DocumentTypes.FirstOrDefault(x => x.Type == "Cédula"),
+                    UserName = email,
                     UserType = userType
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");
-                //await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
 
                 //string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
                 //await _userHelper.ConfirmEmailAsync(user, token);
@@ -60,7 +60,6 @@ namespace GuarderPet.API.Data
 
         private async Task CheckRolesAsync()
         {
-            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
             await _userHelper.CheckRoleAsync(UserType.Carer.ToString());
         }
@@ -106,7 +105,7 @@ namespace GuarderPet.API.Data
             {
                 _context.PetTypes.Add(new PetType { Type = "Perro" });
                 _context.PetTypes.Add(new PetType { Type = "Gato" });
-                _context.PetTypes.Add(new PetType { Type = "Tortuga" });
+                _context.PetTypes.Add(new PetType { Type = "Tortuga"});
                 await _context.SaveChangesAsync();
             }
         }
