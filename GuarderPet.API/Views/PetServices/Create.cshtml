@@ -1,15 +1,11 @@
 ﻿@model GuarderPet.API.Data.Entities.PetService
 
-@{
-    ViewData["Title"] = "Create";
-}
+@{ ViewData["Title"] = "Create"; }
 
-<h1>Create</h1>
-
-<h4>PetService</h4>
+<h1>Crear nuevo servicio para la mascota</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -22,15 +18,14 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group" style="display:flex; justify-content:space-between">
+                <button type="button" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;">
+                    <a asp-action="Index" style="text-decoration:none; color:white;">Volver</a>
+                </button>
+                <input type="submit" value="Crear nuevo servicio" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
