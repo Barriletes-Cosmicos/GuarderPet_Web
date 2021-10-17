@@ -11,11 +11,13 @@ namespace GuarderPet.API.Helpers
     {
         private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserHelper(DataContext context, UserManager<User> userManager)
+        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
@@ -32,9 +34,13 @@ namespace GuarderPet.API.Helpers
             throw new NotImplementedException();
         }
 
-        public Task CheckRoleAsync(string roleName)
+        public async Task CheckRoleAsync(string roleName)
         {
-            throw new NotImplementedException();
+            bool roleExists = await _roleManager.RoleExistsAsync(roleName);
+            if (!roleExists)
+            {
+                await _roleManager.CreateAsync(new IdentityRole { Name = roleName });
+            }
         }
 
         public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)

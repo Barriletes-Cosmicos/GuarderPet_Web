@@ -39,8 +39,8 @@ namespace GuarderPet.API.Data.Entities
         //[Display(Name = "Foto")]
         //public PhotoUser PhotoUser { get; set; }
 
-        [Display(Name = "Mascotas")]
-        public ICollection<Pet> Pets { get; set; }
+        //[Display(Name = "Mascotas")]
+        //public ICollection<Pet> Pets { get; set; }
 
     }
 }
