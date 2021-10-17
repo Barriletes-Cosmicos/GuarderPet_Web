@@ -20,4 +20,8 @@
     <ProjectReference Include="..\GuarderPet.Common\GuarderPet.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assests\" />
+  </ItemGroup>
+
 </Project>
