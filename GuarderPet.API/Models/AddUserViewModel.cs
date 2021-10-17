@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuarderPet.API.Models
 {
-    public class AddUserViewModel
+    public class AddUserViewModel : EditUserViewModel
     {
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Debes introducir un email válido.")]

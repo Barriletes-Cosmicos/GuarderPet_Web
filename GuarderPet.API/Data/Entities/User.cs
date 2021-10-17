@@ -36,6 +36,8 @@ namespace GuarderPet.API.Data.Entities
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         public string Address { get; set; }
 
+        [Display(Name = "Usuario")]
+        public string FullName => $"{FirstName} {LastName}";
         //[Display(Name = "Foto")]
         //public PhotoUser PhotoUser { get; set; }
 
