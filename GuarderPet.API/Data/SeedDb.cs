@@ -20,8 +20,12 @@ namespace GuarderPet.API.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
+            await CheckRolesAsync();
+            await _context.Database.EnsureCreatedAsync();
+            await CheckBreedsAsync();
             await CheckDocumentTypesAsync();
-            await CheckRolesAsycn();
+            await CheckPetServicesAsync();
+            await CheckPetTypesAsync();
             await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Admin);
             await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitax_solo_millos@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Admin);
             await CheckUserAsync("101012", "Stewar", "Marin", "stewartubb@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.User);
@@ -54,6 +58,24 @@ namespace GuarderPet.API.Data
             }
         }
 
+        private async Task CheckRolesAsync()
+        {
+            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+            await _userHelper.CheckRoleAsync(UserType.User.ToString());
+            await _userHelper.CheckRoleAsync(UserType.Carer.ToString());
+        }
+        private async Task CheckBreedsAsync()
+        {
+            if (!_context.Breeds.Any())
+            {
+                _context.Breeds.Add(new Breed { BreedTittle = "Pincher" });
+                _context.Breeds.Add(new Breed { BreedTittle = "Pastor Aleman" });
+                _context.Breeds.Add(new Breed { BreedTittle = "Chihuahua" });
+                _context.Breeds.Add(new Breed { BreedTittle = "Border Collie" });
+                await _context.SaveChangesAsync();
+            }
+        }
+
         private async Task CheckDocumentTypesAsync()
         {
             if (!_context.DocumentTypes.Any())
@@ -65,12 +87,28 @@ namespace GuarderPet.API.Data
                 await _context.SaveChangesAsync();
             }
         }
-        private async Task CheckRolesAsycn()
+
+        private async Task CheckPetServicesAsync()
         {
-            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
-            await _userHelper.CheckRoleAsync(UserType.User.ToString());
-            await _userHelper.CheckRoleAsync(UserType.Carer.ToString());
+            if (!_context.PetServices.Any())
+            {
+                _context.PetServices.Add(new PetService { Price = 10000, ServiceDetail = "Pasear" });
+                _context.PetServices.Add(new PetService { Price = 20000, ServiceDetail = "Baño" });
+                _context.PetServices.Add(new PetService { Price = 30000, ServiceDetail = "Corte de uñas" });
+                _context.PetServices.Add(new PetService { Price = 40000, ServiceDetail = "Guardería" });
+                await _context.SaveChangesAsync();
+            }
         }
 
+        private async Task CheckPetTypesAsync()
+        {
+            if (!_context.PetTypes.Any())
+            {
+                _context.PetTypes.Add(new PetType { Type = "Perro" });
+                _context.PetTypes.Add(new PetType { Type = "Gato" });
+                _context.PetTypes.Add(new PetType { Type = "Tortuga" });
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
