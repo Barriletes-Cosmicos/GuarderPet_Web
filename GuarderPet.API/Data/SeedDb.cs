@@ -21,10 +21,10 @@ namespace GuarderPet.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckRolesAsync();
+            await CheckPetTypesAsync();
             await CheckBreedsAsync();
             await CheckDocumentTypesAsync();
             await CheckPetServicesAsync();
-            await CheckPetTypesAsync();
             await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
             await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitax_solo_millos@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
             await CheckUserAsync("101012", "Stewar", "Marin", "stewartubb@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
