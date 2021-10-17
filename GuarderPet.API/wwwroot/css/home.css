@@ -1,0 +1,10 @@
+﻿*{
+    transition: all 150ms;
+}
+.nav-item:hover{
+    background-color: white;
+    border-radius: 15px 15px;
+}
+.brand:hover {
+   transform: scale(1.2);
+}
