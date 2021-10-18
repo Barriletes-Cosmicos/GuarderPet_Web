@@ -19,24 +19,23 @@
             <select asp-for="DocumentTypeId" asp-items="Model.DocumentTypes" class="form-control"></select>
             <span asp-validation-for="DocumentTypeId" class="text-danger"></span>
         </div>
-
-        <div class="form-group">
-            <label asp-for="Document" class="control-label"></label>
-            <input asp-for="Document" class="form-control" placeholder="1017..."/>
-            <span asp-validation-for="Document" class="text-danger"></span>
-        </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <label asp-for="Address" class="control-label"></label>
-            <input asp-for="Address" class="form-control" placeholder="Cra 68 ..."/>
+            <input asp-for="Address" class="form-control" placeholder="Cra 68 ..." />
             <span asp-validation-for="Address" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="PhoneNumber" class="control-label"></label>
-            <input asp-for="PhoneNumber" class="form-control" placeholder="311..."/>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="311..." />
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Document" class="control-label"></label>
+            <input asp-for="Document" class="form-control" placeholder="1017..." />
+            <span asp-validation-for="Document" class="text-danger"></span>
         </div>
     </div>
 </div>

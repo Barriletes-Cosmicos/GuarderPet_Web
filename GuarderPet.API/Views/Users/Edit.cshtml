@@ -4,9 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Editar</h2>
-
-<h4>Usuario</h4>
+<h1>Editar usuario</h1>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -18,9 +16,11 @@
 
             <partial name="_User" />
 
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Regresar</a>
+            <div class="form-group" style="display:flex; justify-content:space-between">
+                <button type="button" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;">
+                    <a asp-action="Index" style="text-decoration:none; color:white;">Volver</a>
+                </button>
+                <input type="submit" value="Editar usuario" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;" />
             </div>
         </form>
     </div>
