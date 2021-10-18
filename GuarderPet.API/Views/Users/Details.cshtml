@@ -86,12 +86,10 @@
                                 @Html.DisplayNameFor(model => model.Pets.FirstOrDefault().HistoriesCount)
                             </th>
                             <th>
-                                vehicles photos
-                                @*@Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().VehiclePhotosCount)*@
+                                @Html.DisplayNameFor(model => model.Pets.FirstOrDefault().PetsPhotosCount)
                             </th>
                             <th>
-                                image full path
-                                @*@Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().ImageFullPath)*@
+                                @Html.DisplayNameFor(model => model.Pets.FirstOrDefault().ImageFullPath)
                             </th>
                             <th></th>
                         </tr>
@@ -119,12 +117,10 @@
                                     @Html.DisplayFor(modelItem => item.HistoriesCount)
                                 </td>
                                 <td>
-                                    photo count
-                                    @*@Html.DisplayFor(modelItem => item.VehiclePhotosCount)*@
+                                    @Html.DisplayFor(modelItem => item.PetsPhotosCount)
                                 </td>
                                 <td>
-                                    img full path
-                                    @*<img src="@item.ImageFullPath" style="width:100px;height:100px;max-width: 100%; height: auto;" />*@
+                                    <img src="@item.ImageFullPath" style="width:100px;height:100px;max-width: 100%; height: auto;" />
                                 </td>
                                 <td>
                                     <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>

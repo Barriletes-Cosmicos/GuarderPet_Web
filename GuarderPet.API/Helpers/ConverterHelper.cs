@@ -75,42 +75,35 @@ namespace GuarderPet.API.Helpers
                 Id = user.Id,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                UserType = user.UserType,
+                UserType = user.UserType
             };
         }
 
-        //public async Task<Vehicle> ToVehicleAsync(VehicleViewModel model, bool isNew)
-        //{
-        //    return new Vehicle
-        //    {
-        //        Brand = await _context.Brands.FindAsync(model.BrandId),
-        //        Color = model.Color,
-        //        Id = isNew ? 0 : model.Id,
-        //        Line = model.Line,
-        //        Model = model.Model,
-        //        Plaque = model.Plaque,
-        //        Remarks = model.Remarks,
-        //        VehicleType = await _context.VehicleTypes.FindAsync(model.VehicleTypeId)
-        //    };
-        //}
+        public async Task<Pet> ToPetAsync(PetViewModel model, bool isNew)
+        {
+            return new Pet
+            {
+                Breed = await _context.Breeds.FindAsync(model.BreedId),
+                PetName = model.PetName,
+                PetAge = model.PetAge,
+                PetType = await _context.PetTypes.FindAsync(model.PetTypeId),
+                Id = isNew ? 0 : model.Id
+            };
+        }
 
-        //public VehicleViewModel ToVehicleViewModel(Vehicle vehicle)
-        //{
-        //    return new VehicleViewModel
-        //    {
-        //        BrandId = vehicle.Brand.Id,
-        //        Brands = _combosHelper.GetComboBrands(),
-        //        Color = vehicle.Color,
-        //        Id = vehicle.Id,
-        //        Line = vehicle.Line,
-        //        Model = vehicle.Model,
-        //        Plaque = vehicle.Plaque,
-        //        Remarks = vehicle.Remarks,
-        //        UserId = vehicle.User.Id,
-        //        VehiclePhotos = vehicle.VehiclePhotos,
-        //        VehicleTypeId = vehicle.VehicleType.Id,
-        //        VehicleTypes = _combosHelper.GetComboVehicleTypes()
-        //    };
-        //}
+        public PetViewModel ToPetViewModel(Pet pet)
+        {
+            return new PetViewModel
+            {
+                BreedId = pet.Breed.Id,
+                Breeds = _combosHelper.GetComboBreeds(),
+                PetName = pet.PetName,
+                PetAge = pet.PetAge,
+                PetTypeId = pet.PetType.Id,
+                PetTypes = _combosHelper.GetComboPetTypes(),
+                Id = pet.Id,
+                UserId = pet.User.Id
+            };
+        }
     }
 }

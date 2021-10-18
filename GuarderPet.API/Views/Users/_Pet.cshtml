@@ -1,0 +1,31 @@
+﻿@model GuarderPet.API.Models.PetViewModel
+
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="form-group">
+            <label asp-for="PetName" class="control-label"></label>
+            <input asp-for="PetName" class="form-control" />
+            <span asp-validation-for="PetName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PetAge" class="control-label"></label>
+            <input asp-for="PetAge" class="form-control" />
+            <span asp-validation-for="PetAge" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BreedId" class="control-label"></label>
+            <select asp-for="BreedId" asp-items="Model.Breeds" class="form-control"></select>
+            <span asp-validation-for="BreedId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PetTypeId" class="control-label"></label>
+            <select asp-for="PetTypeId" asp-items="Model.PetTypes" class="form-control"></select>
+            <span asp-validation-for="PetTypeId" class="text-danger"></span>
+        </div>
+
+    </div>
+</div>

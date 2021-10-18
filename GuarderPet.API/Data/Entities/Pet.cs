@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GuarderPet.API.Data.Entities
@@ -20,6 +21,7 @@ namespace GuarderPet.API.Data.Entities
         public string PetName { get; set; }
 
         [Display(Name = "Usuario Propietario")]
+        [JsonIgnore]
         public User User { get; set; }
 
         [Display(Name = "Raza")]
@@ -30,8 +32,15 @@ namespace GuarderPet.API.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public PetType PetType { get; set; }
 
-        //    [Display(Name = "Fotos")]
-        //    public ICollection<PhotoPet> Photos { get; set; }
+        [Display(Name = "Fotos")]
+        public ICollection<PetPhoto> PetPhotos { get; set; }
+
+        [Display(Name = "# Fotos")]
+        public int PetsPhotosCount => PetPhotos == null ? 0 : PetPhotos.Count;
+
+        public string ImageFullPath => PetPhotos == null || PetPhotos.Count == 0
+            ? $"https://localhost:44396/images/noimage.png"
+            : PetPhotos.FirstOrDefault().ImageFullPath;
 
         [Display(Name = "Historial de Servicios")]
         public ICollection<PetServiceHistory> Histories { get; set; }

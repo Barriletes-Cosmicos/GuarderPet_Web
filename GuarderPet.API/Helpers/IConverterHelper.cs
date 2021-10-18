@@ -8,8 +8,8 @@ namespace GuarderPet.API.Helpers
     {
         Task<User> ToUserAsync(UserViewModel model, bool isNew);
         UserViewModel ToUserViewModel(User user);
-        //Task<Vehicle> ToVehicleAsync(VehicleViewModel model, bool isNew);
-        //VehicleViewModel ToVehicleViewModel(Vehicle vehicle);
+        Task<Pet> ToPetAsync(PetViewModel model, bool isNew);
+        PetViewModel ToPetViewModel(Pet pet);
         //Task<Detail> ToDetailAsync(DetailViewModel model, bool isNew);
         //DetailViewModel ToDetailViewModel(Detail detail);
     }

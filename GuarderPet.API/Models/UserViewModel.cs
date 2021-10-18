@@ -54,10 +54,5 @@ namespace GuarderPet.API.Models
         public int DocumentTypeId { get; set; }
 
         public IEnumerable<SelectListItem> DocumentTypes { get; set; }
-
-        [Display(Name = "Foto")]
-        public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://vehiclesapilgc.azurewebsites.net/images/noimage.png"
-            : $"https://vehicleslg.blob.core.windows.net/users/{ImageId}";
     }
 }
