@@ -130,14 +130,6 @@ namespace GuarderPet.API.Controllers
                 return NotFound();
             }
 
-            return View(breed);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            Breed breed = await _context.Breeds.FindAsync(id);
             _context.Breeds.Remove(breed);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
