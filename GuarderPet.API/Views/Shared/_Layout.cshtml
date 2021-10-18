@@ -6,13 +6,17 @@
     <title>GuarderPet</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 </head>
 <body style="background-color: #FFE6E6;">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background-color: #FFE6E6;">
             <div class="container">
-                <a class="navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                    GuarderPet<img src="~/logoGuarder.png" alt="Logo" style="width: 50px" />
+                <a class="navbar-brand text-dark brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    GuarderPet<img  src="~/images/logoGuarder.png" alt="Logo" style="width: 50px" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -24,16 +28,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PetTypes" asp-action="Index">Tipos de mascotas</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PetServices" asp-action="Index">Servicios de mascota</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DocumentTypes" asp-action="Index">Tipos de documento</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Usuarios</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Breeds" asp-action="Index">Raza</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
