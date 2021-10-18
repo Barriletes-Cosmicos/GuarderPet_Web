@@ -38,7 +38,9 @@
                 </td>
                 <td style="display: flex">
                     <a asp-action="Edit" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/edit.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/delete.png" alt="delete" style="width:25px" /></a>
+                    <button style="border: none; background-color: transparent; margin: 0; outline:none; padding:0;" data-id="@item.Id" data-toggle="modal" data-target="#deleteDialog">
+                        <img src="~/images/delete.png" alt="delete" style="width:25px" />
+                    </button>                
                 </td>
             </tr>}
                 </table>
@@ -46,6 +48,7 @@
         </div>
     </div>
 </div>
+<partial name="_DeleteDialog" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -61,5 +64,6 @@
                     [25, 50, 100, 200, "Todos"]
                 ]
             });
+    sc_deleteDialog.openModal('delete', true, 'btnYesDelete', '/DocumentTypes/Delete/', false);
         });</script>
 }
