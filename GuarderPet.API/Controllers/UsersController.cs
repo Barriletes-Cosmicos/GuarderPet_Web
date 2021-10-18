@@ -145,18 +145,14 @@ namespace GuarderPet.API.Controllers
                 return NotFound();
             }
 
-            //User user = await _context.Users
-            //    .Include(x => x.DocumentType)
-            //    .Include(x => x.Pet)
-            //    .ThenInclude(x => x.Brand)
-            //    .Include(x => x.Vehicles)
-            //    .ThenInclude(x => x.VehicleType)
             //    .Include(x => x.Vehicles)
             //    .ThenInclude(x => x.VehiclePhotos)
-            //    .Include(x => x.Vehicles)
-            //    .ThenInclude(x => x.Histories)
             User user = await _context.Users
                 .Include(x => x.DocumentType)
+                .Include(x => x.Pets)
+                .ThenInclude(x => x.Breed)
+                .Include(x => x.Pets)
+                .ThenInclude(x => x.Histories)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {

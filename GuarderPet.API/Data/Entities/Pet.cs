@@ -23,12 +23,20 @@ namespace GuarderPet.API.Data.Entities
         public User User { get; set; }
 
         [Display(Name = "Raza")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public Breed Breed { get; set; }
+
+        [Display(Name = "Tipo de mascota")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public PetType PetType { get; set; }
 
         //    [Display(Name = "Fotos")]
         //    public ICollection<PhotoPet> Photos { get; set; }
 
         [Display(Name = "Historial de Servicios")]
         public ICollection<PetServiceHistory> Histories { get; set; }
+
+        [Display(Name = "# Historial")]
+        public int HistoriesCount => Histories == null ? 0 : Histories.Count;
     }
 }
