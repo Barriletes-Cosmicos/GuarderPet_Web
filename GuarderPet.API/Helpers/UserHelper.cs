@@ -98,9 +98,16 @@ namespace GuarderPet.API.Helpers
                                         .FirstOrDefaultAsync(x => x.Email == email);
         }
 
-        public Task<User> GetUserAsync(Guid id)
+        public async Task<User> GetUserAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Users
+               .Include(x => x.DocumentType)
+               //.Include(x => x.Vehicles)
+               //.ThenInclude(x => x.VehiclePhotos)
+               //.Include(x => x.Vehicles)
+               //.ThenInclude(x => x.Histories)
+               //.ThenInclude(x => x.Details)
+               .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 
         public Task<bool> IsUserInRoleAsync(User user, string roleName)
@@ -118,9 +125,16 @@ namespace GuarderPet.API.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<IdentityResult> UpdateUserAsync(User user)
+        public async Task<IdentityResult> UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            User currentUser = await GetUserAsync(user.Email);
+            currentUser.LastName = user.LastName;
+            currentUser.FirstName = user.FirstName;
+            currentUser.DocumentType = user.DocumentType;
+            currentUser.Document = user.Document;
+            currentUser.Address = user.Address;
+            currentUser.PhoneNumber = user.PhoneNumber;
+            return await _userManager.UpdateAsync(currentUser);
         }
 
         public Task<SignInResult> ValidatePasswordAsync(User user, string password)
