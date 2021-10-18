@@ -46,6 +46,7 @@ namespace GuarderPet.API
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IBreedHelper, BreedHelper>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -13,12 +13,14 @@ namespace GuarderPet.API.Controllers
     public class BreedsController : Controller
     {
         private readonly DataContext _context;
-        private readonly CombosHelper _combosHelper;
+        private readonly ICombosHelper _combosHelper;
+        private readonly IBreedHelper _breedHelper;
 
-        public BreedsController(DataContext context, CombosHelper combosHelper)
+        public BreedsController(DataContext context, ICombosHelper combosHelper, IBreedHelper breedHelper)
         {
             _context = context;
             _combosHelper = combosHelper;
+            _breedHelper = breedHelper;
         }
 
         // GET: Breeds
@@ -51,7 +53,7 @@ namespace GuarderPet.API.Controllers
         {
             BreedViewModel model = new BreedViewModel
             {
-                PetType = _combosHelper.GetComboBreeds()
+                PetType = _combosHelper.GetComboPetTypes()
             };
 
             return View(model);
@@ -62,14 +64,11 @@ namespace GuarderPet.API.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BreedTittle,PetType")] Breed breed)
+        public async Task<IActionResult> Create(BreedViewModel breed)
         {
             if (ModelState.IsValid)
             {
-                breed.PetType = _context.PetTypes.Where( x => x.Type == breed.PetType.Type)
-                                                 .FirstOrDefault<PetType>();
-                _context.Add(breed);
-                await _context.SaveChangesAsync();
+                await _breedHelper.AddBreedAsync(breed);
                 return RedirectToAction(nameof(Index));
             }
             return View(breed);
