@@ -26,17 +26,19 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-            <tr>
-                <td style="min-width: 65vw; align-items: center ">
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td style="display: flex">
-                    <a asp-action="Edit" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/edit.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
-                    <button class="deleteItem" style="border: none; background-color: transparent; margin: 0; outline:none; padding:0;" data-id="@item.Id" data-toggle="modal" data-target="#deleteDialog">
-                        <img src="~/images/delete.png" alt="delete" style="width:25px" />
-                    </button>
-                </td>
-            </tr>}
+                <tr>
+                    <td style="min-width: 65vw; align-items: center ">
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td style="display: flex">
+                        <a asp-action="Edit" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/edit.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
+                        <button class="deleteItem" style="border: none; background-color: transparent; margin: 0; outline:none; padding:0;" data-id="@item.Id" data-toggle="modal" data-target="#deleteDialog">
+                            <img src="~/images/delete.png" alt="delete" style="width:25px" />
+                        </button>
+                    </td>
+                </tr>
+}
+                    </tbody>
                 </table>
             </div>
         </div>
