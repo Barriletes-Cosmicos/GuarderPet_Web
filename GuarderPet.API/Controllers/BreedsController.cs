@@ -1,5 +1,7 @@
 ﻿using GuarderPet.API.Data;
 using GuarderPet.API.Data.Entities;
+using GuarderPet.API.Helpers;
+using GuarderPet.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -11,10 +13,12 @@ namespace GuarderPet.API.Controllers
     public class BreedsController : Controller
     {
         private readonly DataContext _context;
+        private readonly CombosHelper _combosHelper;
 
-        public BreedsController(DataContext context)
+        public BreedsController(DataContext context, CombosHelper combosHelper)
         {
             _context = context;
+            _combosHelper = combosHelper;
         }
 
         // GET: Breeds
@@ -45,7 +49,12 @@ namespace GuarderPet.API.Controllers
         // GET: Breeds/Create
         public IActionResult Create()
         {
-            return View();
+            BreedViewModel model = new BreedViewModel
+            {
+                PetType = _combosHelper.GetComboBreeds()
+            };
+
+            return View(model);
         }
 
         // POST: Breeds/Create
