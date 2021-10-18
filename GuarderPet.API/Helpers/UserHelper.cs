@@ -76,9 +76,9 @@ namespace GuarderPet.API.Helpers
             return await _userManager.ConfirmEmailAsync(user, token);
         }
 
-        public Task<IdentityResult> DeleteUserAsync(User user)
+        public async Task<IdentityResult> DeleteUserAsync(User user)
         {
-            throw new NotImplementedException();
+            return await _userManager.DeleteAsync(user);
         }
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
