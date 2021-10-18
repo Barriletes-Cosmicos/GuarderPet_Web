@@ -1,5 +1,7 @@
 ﻿using GuarderPet.API.Data;
 using GuarderPet.API.Data.Entities;
+using GuarderPet.API.Helpers;
+using GuarderPet.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -11,19 +13,21 @@ namespace GuarderPet.API.Controllers
     public class BreedsController : Controller
     {
         private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
+        private readonly IBreedHelper _breedHelper;
 
-        public BreedsController(DataContext context)
+        public BreedsController(DataContext context, ICombosHelper combosHelper, IBreedHelper breedHelper)
         {
             _context = context;
+            _combosHelper = combosHelper;
+            _breedHelper = breedHelper;
         }
 
-        // GET: Breeds
         public async Task<IActionResult> Index()
         {
             return View(await _context.Breeds.Include(x => x.PetType).ToListAsync());
         }
 
-        // GET: Breeds/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,25 +46,23 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // GET: Breeds/Create
         public IActionResult Create()
         {
-            return View();
+            BreedViewModel model = new BreedViewModel
+            {
+                PetType = _combosHelper.GetComboPetTypes()
+            };
+
+            return View(model);
         }
 
-        // POST: Breeds/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BreedTittle,PetType")] Breed breed)
+        public async Task<IActionResult> Create(BreedViewModel breed)
         {
             if (ModelState.IsValid)
             {
-                breed.PetType = _context.PetTypes.Where( x => x.Type == breed.PetType.Type)
-                                                 .FirstOrDefault<PetType>();
-                _context.Add(breed);
-                await _context.SaveChangesAsync();
+                await _breedHelper.AddBreedAsync(breed);
                 return RedirectToAction(nameof(Index));
             }
             return View(breed);
@@ -82,9 +84,6 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // POST: Breeds/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BreedTittle")] Breed breed)
@@ -117,7 +116,6 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // GET: Breeds/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,15 +130,6 @@ namespace GuarderPet.API.Controllers
                 return NotFound();
             }
 
-            return View(breed);
-        }
-
-        // POST: Breeds/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            Breed breed = await _context.Breeds.FindAsync(id);
             _context.Breeds.Remove(breed);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

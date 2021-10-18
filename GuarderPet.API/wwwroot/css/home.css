@@ -1,10 +1,25 @@
 ﻿*{
     transition: all 150ms;
 }
-.nav-item:hover{
-    background-color: white;
+
+.nav-item {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.nav-item :hover{
+    background-color: #BD1616;
     border-radius: 15px 15px;
 }
+
+.nav-item a{
+    color: black;   
+}
+
+.nav-item a:hover {
+    color: white;
+}
+
 .brand:hover {
    transform: scale(1.2);
 }
