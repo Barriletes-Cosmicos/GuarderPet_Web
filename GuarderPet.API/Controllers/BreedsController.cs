@@ -53,10 +53,12 @@ namespace GuarderPet.API.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BreedTittle")] Breed breed)
+        public async Task<IActionResult> Create([Bind("Id,BreedTittle,PetType")] Breed breed)
         {
             if (ModelState.IsValid)
             {
+                breed.PetType = _context.PetTypes.Where( x => x.Type == breed.PetType.Type)
+                                                 .FirstOrDefault<PetType>();
                 _context.Add(breed);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
