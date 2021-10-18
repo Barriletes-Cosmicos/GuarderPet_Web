@@ -38,11 +38,11 @@ namespace GuarderPet.API.Data.Entities
 
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
-        //[Display(Name = "Foto")]
-        //public PhotoUser PhotoUser { get; set; }
 
-        //[Display(Name = "Mascotas")]
-        //public ICollection<Pet> Pets { get; set; }
+        [Display(Name = "Mascotas")]
+        public ICollection<Pet> Pets { get; set; }
 
+        [Display(Name = "# Mascotas")]
+        public int PetsCount => Pets == null ? 0 : Pets.Count;
     }
 }

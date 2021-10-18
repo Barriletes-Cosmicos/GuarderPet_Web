@@ -94,8 +94,8 @@ namespace GuarderPet.API.Helpers
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users
-                                        .Include(x => x.DocumentType)
-                                        .FirstOrDefaultAsync(x => x.Email == email);
+                .Include(x => x.DocumentType)
+                .FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task<User> GetUserAsync(Guid id)
