@@ -38,10 +38,6 @@
                                 Numero de mascotas
                                 @*@Html.DisplayNameFor(model => model.VehiclesCount)*@
                             </th>
-                            <th>
-                                img
-                                @*@Html.DisplayNameFor(model => model.ImageFullPath)*@
-                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -69,13 +65,10 @@
                         count
                         @*@Html.DisplayFor(modelItem => item.VehiclesCount)*@
                     </td>
-                    <td>
-                        <img src="" style="width: 100px; height: 100px; border-radius: 150px;" />
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Mascotas</a>
-                        @* <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>*@
+                    <td style="display: flex">
+                        <a asp-action="Edit" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/edit.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
+                        <a asp-action="Details" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/mascotasIco.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/delete.png" alt="delete" style="width:25px" /></a>
                     </td>
                 </tr>}
                     </tbody>
