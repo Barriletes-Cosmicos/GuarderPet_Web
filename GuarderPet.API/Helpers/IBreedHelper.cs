@@ -10,5 +10,6 @@ namespace GuarderPet.API.Helpers
     public interface IBreedHelper
     {
         Task<Breed> AddBreedAsync(BreedViewModel model);
+        Task<Breed> DeleteBreedAsync(int id);
     }
 }

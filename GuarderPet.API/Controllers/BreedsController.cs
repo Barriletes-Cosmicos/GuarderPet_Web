@@ -23,13 +23,11 @@ namespace GuarderPet.API.Controllers
             _breedHelper = breedHelper;
         }
 
-        // GET: Breeds
         public async Task<IActionResult> Index()
         {
             return View(await _context.Breeds.Include(x => x.PetType).ToListAsync());
         }
 
-        // GET: Breeds/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,7 +46,6 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // GET: Breeds/Create
         public IActionResult Create()
         {
             BreedViewModel model = new BreedViewModel
@@ -59,9 +56,6 @@ namespace GuarderPet.API.Controllers
             return View(model);
         }
 
-        // POST: Breeds/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BreedViewModel breed)
@@ -90,9 +84,6 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // POST: Breeds/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BreedTittle")] Breed breed)
@@ -125,7 +116,6 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // GET: Breeds/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,7 +133,6 @@ namespace GuarderPet.API.Controllers
             return View(breed);
         }
 
-        // POST: Breeds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

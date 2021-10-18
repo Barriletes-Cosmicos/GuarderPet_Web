@@ -23,6 +23,15 @@ namespace GuarderPet.API.Helpers
 
             _context.Add(breed);
             await _context.SaveChangesAsync();
+
+            return breed;
+        }
+
+        public async Task<Breed> DeleteBreedAsync(int id)
+        {
+            Breed breed = await _context.Breeds.FindAsync(id);
+            _context.Remove(breed);
+
             return breed;
         }
     }
