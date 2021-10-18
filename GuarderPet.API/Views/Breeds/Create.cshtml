@@ -4,34 +4,31 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Breed</h4>
+<h1>Crear nueva raza con su tipo</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="BreedTittle" class="control-label"></label>
-                <input asp-for="BreedTittle" class="form-control" />
-                <select asp-for="PetType.Type">
+                <input asp-for="BreedTittle" class="form-control mb-2" placeholder="Raza de la mascota" />
+                <select asp-for="PetType.Type" class="form-control">
                     <option  value="Perro">Perro</option>
                     <option  value="Gato">Gato</option>
                     <option  value="Tortuga">Tortuga</option>
                 </select>
                 <span asp-validation-for="BreedTittle" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group" style="display:flex; justify-content:space-between">
+                <button type="button" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;">
+                    <a asp-action="Index" style="text-decoration:none; color:white;">Volver</a>
+                </button>
+                <input type="submit" value="Crear nueva raza" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;" />
             </div>
         </form>
     </div>
     </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
