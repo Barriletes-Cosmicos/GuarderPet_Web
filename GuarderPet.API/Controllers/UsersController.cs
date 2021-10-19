@@ -103,12 +103,6 @@ namespace GuarderPet.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Guid imageId = model.ImageId;
-                //if (model.ImageFile != null)
-                //{
-                //    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
-                //}
-
                 User user = await _converterHelper.ToUserAsync(model, false);
                 await _userHelper.UpdateUserAsync(user);
                 return RedirectToAction(nameof(Index));
@@ -239,6 +233,193 @@ namespace GuarderPet.API.Controllers
             petViewModel.Breeds = _combosHelper.GetComboBreeds();
             petViewModel.PetTypes = _combosHelper.GetComboPetTypes();
             return View(petViewModel);
+        }
+
+        public async Task<IActionResult> EditPet(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Pet pet = await _context.Pets
+                .Include(x => x.User)
+                .Include(x => x.Breed)
+                .Include(x => x.PetType)
+                .Include(x => x.PetPhotos)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            PetViewModel model = _converterHelper.ToPetViewModel(pet);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPet(int id, PetViewModel petViewModel)
+        {
+            if (id != petViewModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Pet pet = await _converterHelper.ToPetAsync(petViewModel, false);
+                    _context.Pets.Update(pet);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = petViewModel.UserId });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un vehículo con esta placa.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            petViewModel.Breeds = _combosHelper.GetComboBreeds();
+            petViewModel.PetTypes = _combosHelper.GetComboPetTypes();
+            return View(petViewModel);
+        }
+
+        public async Task<IActionResult> DeletePet(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Pet pet = await _context.Pets
+                .Include(x => x.User)
+                .Include(x => x.Breed)
+                .Include(x => x.PetType)
+                .Include(x => x.PetPhotos)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            _context.Pets.Remove(pet);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { id = pet.User.Id });
+        }
+
+        public async Task<IActionResult> DeleteImagePet(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PetPhoto petPhoto = await _context.PetPhotos
+                .Include(x => x.Pet)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (petPhoto == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                await _blobHelper.DeleteBlobAsync(petPhoto.ImageId, "pets");
+            }
+            catch { }
+
+            _context.PetPhotos.Remove(petPhoto);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(EditPet), new { id = petPhoto.Pet.Id });
+        }
+
+        public async Task<IActionResult> AddPetImage(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Pet pet = await _context.Pets
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            PetPhotoViewModel model = new()
+            {
+                PetId = pet.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPetImage(PetPhotoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "pets");
+                Pet pet = await _context.Pets
+                    .Include(x => x.PetPhotos)
+                    .FirstOrDefaultAsync(x => x.Id == model.PetId);
+                if (pet.PetPhotos == null)
+                {
+                    pet.PetPhotos = new List<PetPhoto>();
+                }
+
+                pet.PetPhotos.Add(new PetPhoto
+                {
+                    ImageId = imageId
+                });
+
+                _context.Pets.Update(pet);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(EditPet), new { id = pet.Id });
+            }
+
+            return View(model);
+
+        }
+
+        public async Task<IActionResult> DetailsPet(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Pet pet = await _context.Pets
+                .Include(x => x.User)
+                .Include(x => x.Breed)
+                .Include(x => x.PetPhotos)
+                .Include(x => x.Histories)
+                .ThenInclude(x => x.CareDescriptions)
+                .ThenInclude(x => x.PetServices)
+                .Include(x => x.Histories)
+                .ThenInclude(x => x.User)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            return View(pet);
         }
     }
 }

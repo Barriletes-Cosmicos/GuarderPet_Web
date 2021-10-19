@@ -1,0 +1,138 @@
+﻿@model GuarderPet.API.Data.Entities.Pet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<h2>Historia</h2>
+
+<div>
+    <h4>Mascota</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.PetName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.PetName)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.PetAge)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.PetAge)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.PetType.Type)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.PetType.Type)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Breed.BreedTittle)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Breed.BreedTittle)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <img src="@Model.ImageFullPath" style="width: 200px; height: 200px; max-width: 100%; height: auto;" />
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="AddHistory" asp-route-id="@Model.Id" class="btn btn-primary">Adicionar Historia</a>
+    <a asp-action="EditPet" asp-route-id="@Model.Id" class="btn btn-warning">Editar Mascota</a>
+    <a asp-action="Details" asp-route-id="@Model.User.Id" class="btn btn-success">Regresar</a>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Historias</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().InitDateLocal)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().EndDateLocal)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().User.FullName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().CareDescriptionsCount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().Total)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Histories)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InitDateLocal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDateLocal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CareDescriptionsCount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Total)
+                            </td>
+                            <td>
+                                <a asp-action="EditHistory" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                <a asp-action="DetailsHistory" asp-route-id="@item.Id" class="btn btn-info">Detalle<i class="glyphicon glyphicon-align-justify"></i></a>
+                                <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/js/deleteDialog.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ],
+                "order": [[0, "desc"]]
+            });
+            // Delete item
+            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Users/DeleteHistory/', false);
+        });
+    </script>
+}

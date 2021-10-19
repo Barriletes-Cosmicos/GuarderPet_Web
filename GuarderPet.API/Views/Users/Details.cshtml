@@ -114,18 +114,15 @@
                                     @Html.DisplayFor(modelItem => item.HistoriesCount)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.HistoriesCount)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.PetsPhotosCount)
                                 </td>
                                 <td>
                                     <img src="@item.ImageFullPath" style="width:100px;height:100px;max-width: 100%; height: auto;" />
                                 </td>
                                 <td>
-                                    <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                    <a asp-action="DetailsVehicle" asp-route-id="@item.Id" class="btn btn-info">Historias<i class="glyphicon glyphicon-align-justify"></i></a>
-                                    @*<button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>*@
+                                    <a asp-action="EditPet" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                    <a asp-action="DetailsPet" asp-route-id="@item.Id" class="btn btn-info">Historias<i class="glyphicon glyphicon-align-justify"></i></a>
+                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
                                 </td>
                             </tr>
                         }
@@ -136,11 +133,11 @@
     </div>
 </div>
 
-@*<partial name="_DeleteDialog" />*@
+<partial name="_DeleteDialog" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @*<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="/js/deleteDialog.js"></script>
 
     <script type="text/javascript">
@@ -157,5 +154,5 @@
             // Delete item
             sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Users/DeleteVehicle/', false);
         });
-    </script>*@
+    </script>
 }

@@ -102,7 +102,8 @@ namespace GuarderPet.API.Helpers
                 PetTypeId = pet.PetType.Id,
                 PetTypes = _combosHelper.GetComboPetTypes(),
                 Id = pet.Id,
-                UserId = pet.User.Id
+                UserId = pet.User.Id,
+                PetPhotos = pet.PetPhotos
             };
         }
     }

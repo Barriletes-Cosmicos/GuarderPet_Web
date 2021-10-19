@@ -4,14 +4,16 @@ using GuarderPet.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GuarderPet.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211018231056_CRUD pets")]
+    partial class CRUDpets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,23 +53,7 @@ namespace GuarderPet.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PetServiceHistoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PetServicesId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ServicePrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PetServiceHistoryId");
-
-                    b.HasIndex("PetServicesId");
 
                     b.ToTable("CareDescriptions");
                 });
@@ -154,6 +140,9 @@ namespace GuarderPet.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CareDescriptionId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -163,6 +152,8 @@ namespace GuarderPet.API.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CareDescriptionId");
 
                     b.HasIndex("ServiceDetail")
                         .IsUnique();
@@ -176,6 +167,9 @@ namespace GuarderPet.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CareDescriptionId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -193,6 +187,8 @@ namespace GuarderPet.API.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CareDescriptionId");
 
                     b.HasIndex("PetId");
 
@@ -475,19 +471,6 @@ namespace GuarderPet.API.Migrations
                     b.Navigation("PetType");
                 });
 
-            modelBuilder.Entity("GuarderPet.API.Data.Entities.CareDescription", b =>
-                {
-                    b.HasOne("GuarderPet.API.Data.Entities.PetServiceHistory", null)
-                        .WithMany("CareDescriptions")
-                        .HasForeignKey("PetServiceHistoryId");
-
-                    b.HasOne("GuarderPet.API.Data.Entities.PetService", "PetServices")
-                        .WithMany("CareDescriptions")
-                        .HasForeignKey("PetServicesId");
-
-                    b.Navigation("PetServices");
-                });
-
             modelBuilder.Entity("GuarderPet.API.Data.Entities.Pet", b =>
                 {
                     b.HasOne("GuarderPet.API.Data.Entities.Breed", "Breed")
@@ -520,8 +503,19 @@ namespace GuarderPet.API.Migrations
                     b.Navigation("Pet");
                 });
 
+            modelBuilder.Entity("GuarderPet.API.Data.Entities.PetService", b =>
+                {
+                    b.HasOne("GuarderPet.API.Data.Entities.CareDescription", null)
+                        .WithMany("PetServices")
+                        .HasForeignKey("CareDescriptionId");
+                });
+
             modelBuilder.Entity("GuarderPet.API.Data.Entities.PetServiceHistory", b =>
                 {
+                    b.HasOne("GuarderPet.API.Data.Entities.CareDescription", "CareDescription")
+                        .WithMany()
+                        .HasForeignKey("CareDescriptionId");
+
                     b.HasOne("GuarderPet.API.Data.Entities.Pet", "Pet")
                         .WithMany("Histories")
                         .HasForeignKey("PetId");
@@ -529,6 +523,8 @@ namespace GuarderPet.API.Migrations
                     b.HasOne("GuarderPet.API.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("CareDescription");
 
                     b.Navigation("Pet");
 
@@ -604,21 +600,16 @@ namespace GuarderPet.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GuarderPet.API.Data.Entities.CareDescription", b =>
+                {
+                    b.Navigation("PetServices");
+                });
+
             modelBuilder.Entity("GuarderPet.API.Data.Entities.Pet", b =>
                 {
                     b.Navigation("Histories");
 
                     b.Navigation("PetPhotos");
-                });
-
-            modelBuilder.Entity("GuarderPet.API.Data.Entities.PetService", b =>
-                {
-                    b.Navigation("CareDescriptions");
-                });
-
-            modelBuilder.Entity("GuarderPet.API.Data.Entities.PetServiceHistory", b =>
-                {
-                    b.Navigation("CareDescriptions");
                 });
 
             modelBuilder.Entity("GuarderPet.API.Data.Entities.PetType", b =>

@@ -15,6 +15,7 @@ namespace GuarderPet.API.Data
         public DbSet<Pet> Pets { get; set; }
         public DbSet<PetService> PetServices { get; set; }
         public DbSet<PetType> PetTypes { get; set; }
+        public DbSet<PetPhoto> PetPhotos { get; set; }
         public DbSet<Breed> Breeds { get; set; }
         public DbSet<PetServiceHistory> PetServiceHistories { get; set; }
         public DbSet<Place> Places { get; set; }
