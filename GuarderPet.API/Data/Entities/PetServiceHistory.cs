@@ -14,7 +14,6 @@ namespace GuarderPet.API.Data.Entities
         [Display(Name = "Mascota")]
         public Pet Pet { get; set; }
 
-        [JsonIgnore]
         [Display(Name = "Usuario")]
         public User User { get; set; }
         public ICollection<CareDescription> CareDescriptions { get; set; }
@@ -37,6 +36,14 @@ namespace GuarderPet.API.Data.Entities
         [Display(Name = "Fecha")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         public DateTime EndDateLocal => EndDate.ToLocalTime();
+
+        [Display(Name = "Fecha de registro")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        public DateTime RegisterDate { get; set; }
+
+        [Display(Name = "Observación")]
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
 
         [Display(Name = "Precio")]
         [DisplayFormat(DataFormatString = "{0:C2}")]

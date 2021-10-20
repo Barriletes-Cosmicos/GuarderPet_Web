@@ -1,0 +1,13 @@
+﻿@model GuarderPet.API.Models.HistoryViewModel
+
+<div class="form-group">
+    <label asp-for="RegisterDate" class="control-label"></label>
+    <input asp-for="RegisterDate" class="form-control" type="date" />
+    <span asp-validation-for="RegisterDate" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Comments" class="control-label"></label>
+    <textarea asp-for="Comments" class="form-control"></textarea>
+    <span asp-validation-for="Comments" class="text-danger"></span>
+</div>

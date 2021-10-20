@@ -21,7 +21,6 @@ namespace GuarderPet.API.Data.Entities
         public string PetName { get; set; }
 
         [Display(Name = "Usuario Propietario")]
-        [JsonIgnore]
         public User User { get; set; }
 
         [Display(Name = "Raza")]

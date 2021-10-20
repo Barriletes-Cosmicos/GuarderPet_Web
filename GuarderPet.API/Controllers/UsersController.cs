@@ -421,5 +421,146 @@ namespace GuarderPet.API.Controllers
 
             return View(pet);
         }
+
+        public async Task<IActionResult> AddHistory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Pet pet = await _context.Pets.FindAsync(id);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            HistoryViewModel model = new HistoryViewModel
+            {
+                PetId = pet.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddHistory(HistoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Pet pet = await _context.Pets
+                    .Include(x => x.Histories)
+                    .FirstOrDefaultAsync(x => x.Id == model.PetId);
+                if (pet == null)
+                {
+                    return NotFound();
+                }
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+                PetServiceHistory serviceHistory = new PetServiceHistory
+                {
+                    RegisterDate = DateTime.UtcNow,
+                    Comments = model.Comments,
+                    User = user
+                };
+
+                if (pet.Histories == null)
+                {
+                    pet.Histories = new List<PetServiceHistory>();
+                }
+
+                pet.Histories.Add(serviceHistory);
+                _context.Pets.Update(pet);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(DetailsPet), new { id = pet.Id });
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> EditHistory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PetServiceHistory serviceHistory = await _context.PetServiceHistories
+                .Include(x => x.Pet)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (serviceHistory == null)
+            {
+                return NotFound();
+            }
+
+            HistoryViewModel model = new HistoryViewModel
+            {
+                RegisterDate = serviceHistory.RegisterDate,
+                Comments = serviceHistory.Comments,
+                PetId = serviceHistory.Pet.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditHistory(int id, HistoryViewModel historyViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                PetServiceHistory serviceHistory = await _context.PetServiceHistories.FindAsync(id);
+                serviceHistory.RegisterDate = historyViewModel.RegisterDate;
+                serviceHistory.Comments = historyViewModel.Comments;
+                _context.PetServiceHistories.Update(serviceHistory);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(DetailsPet), new { id = historyViewModel.PetId });
+            }
+
+            return View(historyViewModel);
+        }
+
+        public async Task<IActionResult> DeleteHistory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PetServiceHistory serviceHistory = await _context.PetServiceHistories
+                .Include(x => x.CareDescriptions)
+                .Include(x => x.Pet)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (serviceHistory == null)
+            {
+                return NotFound();
+            }
+
+            _context.PetServiceHistories.Remove(serviceHistory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DetailsPet), new { id = serviceHistory.Pet.Id });
+        }
+
+        public async Task<IActionResult> DetailsHistory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PetServiceHistory serviceHistory = await _context.PetServiceHistories
+                .Include(x => x.CareDescriptions)
+                .ThenInclude(x => x.PetServices)
+                .Include(x => x.Pet)
+                .ThenInclude(x => x.PetPhotos)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (serviceHistory == null)
+            {
+                return NotFound();
+            }
+
+            return View(serviceHistory);
+        }
     }
 }

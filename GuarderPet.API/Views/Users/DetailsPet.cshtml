@@ -62,13 +62,10 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().InitDateLocal)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().EndDateLocal)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().User.FullName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().RegisterDate)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().CareDescriptionsCount)
@@ -84,13 +81,10 @@
                         {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.InitDateLocal)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndDateLocal)
-                            </td>
-                            <td>
                                 @Html.DisplayFor(modelItem => item.User.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RegisterDate)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CareDescriptionsCount)
