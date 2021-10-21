@@ -21,12 +21,22 @@ namespace GuarderPet.API.Helpers
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        public async Task<IdentityResult> AddUserAsync(User user, string password)
+        public async Task<User> AddUserAsync(User user, string password)
         {
-            return await _userManager.CreateAsync(user, password);
-        }
+            
+            IdentityResult result = await _userManager.CreateAsync(user, password);
+            if (result != IdentityResult.Success)
+            {
+                return null;
+            }
 
-        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType)
+            User newUser = await GetUserAsync(user.UserName);
+            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            return newUser;
+        }
+     
+
+        public async Task<User> AddUserAsync(AddUserViewModel model, UserType userType)
         {
             User user = new User
             {
@@ -115,6 +125,11 @@ namespace GuarderPet.API.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task LogoutAsync()
         {
             throw new NotImplementedException();
@@ -141,5 +156,6 @@ namespace GuarderPet.API.Helpers
         {
             throw new NotImplementedException();
         }
+
     }
 }
