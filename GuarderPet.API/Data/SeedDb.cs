@@ -26,8 +26,8 @@ namespace GuarderPet.API.Data
             await CheckDocumentTypesAsync();
             await CheckPetServicesAsync();
             await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
-            await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitax_solo_millos@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
-            await CheckUserAsync("101012", "Stewar", "Marin", "stewartubb@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitag@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckUserAsync("101012", "Stewar", "Marin", "stewarm@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
             await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
             await CheckUserAsync("101014", "Andres", "Arango", "aa@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101015", "Caterine", "Caminos", "catcam@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
