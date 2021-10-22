@@ -14,12 +14,14 @@ namespace GuarderPet.API.Helpers
         private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
         public async Task<User> AddUserAsync(User user, string password)
         {
@@ -67,9 +69,9 @@ namespace GuarderPet.API.Helpers
             await _userManager.AddToRoleAsync(user, roleName);
         }
 
-        public Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
 
         public async Task CheckRoleAsync(string roleName)
@@ -96,9 +98,9 @@ namespace GuarderPet.API.Helpers
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
-        public Task<string> GeneratePasswordResetTokenAsync(User user)
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
         {
-            throw new NotImplementedException();
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
         public async Task<User> GetUserAsync(string email)
@@ -120,24 +122,24 @@ namespace GuarderPet.API.Helpers
                .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 
-        public Task<bool> IsUserInRoleAsync(User user, string roleName)
+        public async Task<bool> IsUserInRoleAsync(User user, string roleName)
         {
-            throw new NotImplementedException();
+            return await _userManager.IsInRoleAsync(user, roleName);
         }
 
-        public Task<SignInResult> LoginAsync(LoginViewModel model)
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
         {
-            throw new NotImplementedException();
+            return await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, false);
         }
 
-        public Task LogoutAsync()
+        public async Task LogoutAsync()
         {
-            throw new NotImplementedException();
+            await _signInManager.SignOutAsync();
         }
 
-        public Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
         {
-            throw new NotImplementedException();
+            return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
         public async Task<IdentityResult> UpdateUserAsync(User user)
@@ -152,9 +154,9 @@ namespace GuarderPet.API.Helpers
             return await _userManager.UpdateAsync(currentUser);
         }
 
-        public Task<SignInResult> ValidatePasswordAsync(User user, string password)
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
         {
-            throw new NotImplementedException();
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
         }
 
     }
