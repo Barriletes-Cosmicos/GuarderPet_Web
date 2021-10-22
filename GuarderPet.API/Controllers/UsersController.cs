@@ -145,6 +145,8 @@ namespace GuarderPet.API.Controllers
                 .Include(x => x.Pets)
                 .ThenInclude(x => x.Histories)
                 .Include(x => x.Pets)
+                .ThenInclude(x => x.PetType)
+                .Include(x => x.Pets)
                 .ThenInclude(x => x.PetPhotos)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
