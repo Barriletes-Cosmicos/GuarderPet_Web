@@ -4,6 +4,8 @@ using GuarderPet.API.Models;
 using System;
 using System.Threading.Tasks;
 using GuarderPet.API.Helpers;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace GuarderPet.API.Helpers
 {
@@ -79,12 +81,18 @@ namespace GuarderPet.API.Helpers
 
         public async Task<Pet> ToPetAsync(PetViewModel model, bool isNew)
         {
+            Breed breed = await _context.Breeds
+                                               .Include(x=>x.PetType)
+                                               .FirstOrDefaultAsync(x => x.Id == model.BreedId);
+
+            PetType petType = breed.PetType;
+
             return new Pet
             {
-                Breed = await _context.Breeds.FindAsync(model.BreedId),
+                Breed = breed,
                 PetName = model.PetName,
                 PetAge = model.PetAge,
-                PetType = await _context.PetTypes.FindAsync(model.PetTypeId),
+                PetType = petType,
                 Id = isNew ? 0 : model.Id
             };
         }

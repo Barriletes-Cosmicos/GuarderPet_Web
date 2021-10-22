@@ -1,4 +1,6 @@
 ﻿using GuarderPet.API.Data.Entities;
+using GuarderPet.API.Models;
+using GuarderPet.Common.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
@@ -11,10 +13,9 @@ namespace GuarderPet.API.Helpers
 
         Task<User> GetUserAsync(Guid id);
 
-        Task<IdentityResult> AddUserAsync(User user, string password);
+        Task<User> AddUserAsync(User user, string password);
 
-        //TODO
-        //Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType);
+        Task<User> AddUserAsync(AddUserViewModel model, UserType userType);
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
@@ -26,8 +27,7 @@ namespace GuarderPet.API.Helpers
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
-        //TODO
-        //Task<SignInResult> LoginAsync(LoginViewModel model);
+        Task<SignInResult> LoginAsync(LoginViewModel model);
 
         Task LogoutAsync();
 
