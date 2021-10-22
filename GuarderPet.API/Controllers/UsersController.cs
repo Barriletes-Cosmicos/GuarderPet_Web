@@ -562,5 +562,114 @@ namespace GuarderPet.API.Controllers
 
             return View(serviceHistory);
         }
+
+        public async Task<IActionResult> AddDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PetServiceHistory serviceHistory = await _context.PetServiceHistories.FindAsync(id);
+            if (serviceHistory == null)
+            {
+                return NotFound();
+            }
+
+            DetailViewModel model = new DetailViewModel
+            {
+                HistoryId = serviceHistory.Id,
+                PetServices = _combosHelper.GetComboPetServices()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddDetail(DetailViewModel detailViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                PetServiceHistory serviceHistory = await _context.PetServiceHistories
+                    .Include(x => x.CareDescriptions)
+                    .FirstOrDefaultAsync(x => x.Id == detailViewModel.HistoryId);
+                if (serviceHistory == null)
+                {
+                    return NotFound();
+                }
+
+                if (serviceHistory.CareDescriptions == null)
+                {
+                    serviceHistory.CareDescriptions = new List<CareDescription>();
+                }
+
+                CareDescription detail = await _converterHelper.ToDetailAsync(detailViewModel, true);
+                serviceHistory.CareDescriptions.Add(detail);
+                _context.PetServiceHistories.Update(serviceHistory);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(DetailsHistory), new { id = detailViewModel.HistoryId });
+            }
+
+            detailViewModel.PetServices = _combosHelper.GetComboPetServices();
+            return View(detailViewModel);
+        }
+
+        public async Task<IActionResult> EditDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            CareDescription careDescription = await _context.CareDescriptions
+                .Include(x => x.History)
+                .Include(x => x.PetServices)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (careDescription == null)
+            {
+                return NotFound();
+            }
+
+            DetailViewModel model = _converterHelper.ToDetailViewModel(careDescription);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditDetail(int id, DetailViewModel detailViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                CareDescription careDescription = await _converterHelper.ToDetailAsync(detailViewModel, false);
+                _context.CareDescriptions.Update(careDescription);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(DetailsHistory), new { id = detailViewModel.HistoryId });
+            }
+
+            detailViewModel.PetServices = _combosHelper.GetComboPetServices();
+            return View(detailViewModel);
+        }
+
+        public async Task<IActionResult> DeleteDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            CareDescription careDescription = await _context.CareDescriptions
+                .Include(x => x.History)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (careDescription == null)
+            {
+                return NotFound();
+            }
+
+            _context.CareDescriptions.Remove(careDescription);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DetailsHistory), new { id = careDescription.History.Id });
+        }
     }
 }

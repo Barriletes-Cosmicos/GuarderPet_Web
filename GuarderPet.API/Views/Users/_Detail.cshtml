@@ -1,0 +1,25 @@
+﻿@model GuarderPet.API.Models.DetailViewModel
+
+<div class="form-group">
+    <label asp-for="ServiceId" class="control-label"></label>
+    <select asp-for="ServiceId" asp-items="Model.PetServices" class="form-control"></select>
+    <span asp-validation-for="ServiceId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Comments" class="control-label"></label>
+    <textarea asp-for="Comments" class="form-control"></textarea>
+    <span asp-validation-for="Comments" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="ServicePrice" class="control-label"></label>
+    <textarea asp-for="ServicePrice" class="form-control"></textarea>
+    <span asp-validation-for="ServicePrice" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="TotalPrice" class="control-label"></label>
+    <textarea asp-for="TotalPrice" class="form-control"></textarea>
+    <span asp-validation-for="TotalPrice" class="text-danger"></span>
+</div>

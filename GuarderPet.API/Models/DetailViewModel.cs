@@ -1,19 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace GuarderPet.API.Data.Entities
+namespace GuarderPet.API.Models
 {
-    public class CareDescription
+    public class DetailViewModel
     {
         public int Id { get; set; }
 
-        [JsonIgnore]
-        [Display(Name = "Historia")]
+        public int HistoryId { get; set; }
+
+        [Display(Name = "Servicio")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un procedimiento.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public PetServiceHistory History { get; set; }
+        public int ServiceId { get; set; }
 
         [Display(Name = "Listado de servicios")]
-        public PetService PetServices { get; set; }
+        public IEnumerable<SelectListItem> PetServices { get; set; }
 
         [Display(Name = "Precio servicio")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
@@ -27,6 +31,5 @@ namespace GuarderPet.API.Data.Entities
         [Display(Name = "Observación")]
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
-
     }
 }

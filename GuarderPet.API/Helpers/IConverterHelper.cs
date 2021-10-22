@@ -10,7 +10,7 @@ namespace GuarderPet.API.Helpers
         UserViewModel ToUserViewModel(User user);
         Task<Pet> ToPetAsync(PetViewModel model, bool isNew);
         PetViewModel ToPetViewModel(Pet pet);
-        //Task<Detail> ToDetailAsync(DetailViewModel model, bool isNew);
-        //DetailViewModel ToDetailViewModel(Detail detail);
+        Task<CareDescription> ToDetailAsync(DetailViewModel model, bool isNew);
+        DetailViewModel ToDetailViewModel(CareDescription detail);
     }
 }
