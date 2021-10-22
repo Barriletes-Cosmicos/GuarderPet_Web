@@ -1,12 +1,15 @@
 ﻿@model GuarderPet.API.Data.Entities.PetService
 
-@{ ViewData["Title"] = "Edit"; }
+@{
+    ViewData["Title"] = "Edit";
+}
 
-<h1>Editar el servicio</h1>
+<h1>Edit</h1>
 
+<h4>PetService</h4>
 <hr />
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -20,16 +23,14 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            <div class="form-group" style="display:flex; justify-content:space-between">
-                <button type="button" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;">
-                    <a asp-action="Index" style="text-decoration:none; color:white;">Volver</a>
-                </button>
-                <input type="submit" value="Editar" class="btn btn-primary" style="background-color: #FF2626; border: none; min-width: 150px;" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

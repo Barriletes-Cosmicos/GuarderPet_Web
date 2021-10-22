@@ -2,6 +2,7 @@
 using GuarderPet.API.Data.Entities;
 using GuarderPet.API.Helpers;
 using GuarderPet.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace GuarderPet.API.Controllers
 {
+    [Authorize(Roles = "Carer")]
     public class BreedsController : Controller
     {
         private readonly DataContext _context;

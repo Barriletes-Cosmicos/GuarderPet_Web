@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuarderPet.API.Data;
 using GuarderPet.API.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GuarderPet.API.Controllers
 {
+    [Authorize(Roles = "Carer")]
     public class PetServicesController : Controller
     {
         private readonly DataContext _context;

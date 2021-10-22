@@ -1,5 +1,6 @@
 ﻿using GuarderPet.API.Data;
 using GuarderPet.API.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace GuarderPet.API.Controllers
 {
+    [Authorize(Roles = "Carer")]
     public class DocumentTypesController : Controller
     {
         private readonly DataContext _context;

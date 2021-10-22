@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GuarderPet.API.Data.Entities
@@ -11,6 +12,7 @@ namespace GuarderPet.API.Data.Entities
         public int Id { get; set; }
 
         [Display(Name = "Usuario")]
+        [JsonIgnore]
         public User User { get; set; }
 
         [Display(Name = "Direccion")]

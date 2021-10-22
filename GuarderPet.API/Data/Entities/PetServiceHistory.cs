@@ -15,6 +15,7 @@ namespace GuarderPet.API.Data.Entities
         public Pet Pet { get; set; }
 
         [Display(Name = "Usuario")]
+        [JsonIgnore]
         public User User { get; set; }
         public ICollection<CareDescription> CareDescriptions { get; set; }
 
