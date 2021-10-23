@@ -16,7 +16,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background-color: white;">
             <div class="container">
                 <a class="navbar-brand text-dark brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    GuarderPet<img  src="~/images/logoGuarder.png" alt="Logo" style="height: 60px" />
+                    GuarderPet<img src="~/images/logoGuarder.png" alt="Logo" style="height: 60px" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -48,28 +48,33 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            // TODO
-                            // Rutas de vistas
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
+                            <li class="buttonIcon">
+                                <button id="userIcon">
+                                    <img src="~/images/usaerIcon.png" alt="Logo" style="height: 50px" />
+                                </button>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Cerrar Sesión</a>
-                            </li>
-
                         }
                         else
                         {
                             <li><a asp-area="" asp-controller="Account" asp-action="Login">Iniciar Sesión</a></li>
-
-
                         }
                     </ul>
-                    </div>
+                </div>
             </div>
         </nav>
     </header>
+    <div style="position: absolute; display: flex; justify-content: flex-end; width: 100%; margin-top: 0;">
+        <div id="userMenu" >
+            <ul>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Carer"))
+                {
+                 <li> Carer </li>
+                }
+                <li ><a asp-area="" asp-controller="Account" asp-action="ChangeUser" style="color: black;">@User.Identity.Name</a></li>
+                <li ><a asp-area="" asp-controller="Account" asp-action="Logout" style="color: black;">Cerrar Sesión</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -77,10 +82,11 @@
     </div>
 
     <footer class="border-top footer text-muted" style="background-color: white">
-        <div class="container text-center" >
+        <div class="container text-center">
             &copy; 2021 - GuarderPet - Lucas Giraldo - Santiago Osorio - Stewar Marin
         </div>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

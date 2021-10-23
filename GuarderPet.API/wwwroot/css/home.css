@@ -23,3 +23,22 @@
 .brand:hover {
    transform: scale(1.2);
 }
+
+.buttonIcon:hover{
+    background-color: grey;
+    padding: 4px;
+}
+
+#userMenu ul {
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 40vw;
+    margin-right: 50px;
+    padding: 20px;
+}
+
+#userMenu li {
+    list-style: none;
+    
