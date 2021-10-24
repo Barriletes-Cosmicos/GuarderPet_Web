@@ -43,28 +43,30 @@ namespace GuarderPet.API.Data
 
         private async Task CheckPlacesAsync()
         {
-            
-            _context.Places.Add(new Place
+            if (!_context.Places.Any())
             {
-                PlaceName = "Guarderia 1",
-                Direction = "Calle 3 #4 - 5",
-               
-            });
+                _context.Places.Add(new Place
+                {
+                    PlaceName = "Guarderia 1",
+                    Direction = "Calle 3 #4 - 5",
 
-            _context.Places.Add(new Place
-            {
-                PlaceName = "Guarderia 2",
-                Direction = "Calle 6 #7 - 9",
+                });
 
-            });
-            _context.Places.Add(new Place
-            {
-                PlaceName = "Guarderia 3",
-                Direction = "Calle 10 #11 - 12",
+                _context.Places.Add(new Place
+                {
+                    PlaceName = "Guarderia 2",
+                    Direction = "Calle 6 #7 - 9",
 
-            });
+                });
+                _context.Places.Add(new Place
+                {
+                    PlaceName = "Guarderia 3",
+                    Direction = "Calle 10 #11 - 12",
 
-            await _context.SaveChangesAsync();
+                });
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType, string place)

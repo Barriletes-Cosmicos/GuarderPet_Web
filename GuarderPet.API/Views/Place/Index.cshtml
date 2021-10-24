@@ -31,17 +31,17 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-            <tr>
-                <td>
+            <tr scope="row">
+                <td scope="col">
                     @Html.DisplayFor(modelItem => item.PlaceName)
                 </td>
-                <td>
+                <td scope="col">
                     @Html.DisplayFor(modelItem => item.Direction)
                 </td>
-                <td>
+                <td scope="col">
                     <a asp-action="Edit" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/edit.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
                 </td>
-            </tr>}
+            </tr scope="row">}
                     </tbody>
                 </table>
             </div>
