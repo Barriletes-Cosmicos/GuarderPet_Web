@@ -1,0 +1,79 @@
+﻿*{
+    transition: all 150ms;
+}
+
+.nav-item {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.nav-item :hover{
+    background-color: #BD1616;
+    border-radius: 15px 15px;
+}
+
+.nav-item a{
+    color: black;   
+}
+
+.nav-item a:hover {
+    color: white;
+}
+
+.brand:hover {
+   transform: scale(1.2);
+}
+
+.buttonIcon:hover {
+    transform: scale(1.2);
+    outline: none;
+    padding: 4px;
+}
+
+#userMenu ul {
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 40vw;
+    margin-right: 50px;
+    padding: 20px;
+}
+
+#userMenu li {
+    list-style: none;
+}
+
+#userIcon{
+    outline: none;
+    background-color: transparent;
+    border: none;
+}
+
+#loginContainer {
+    margin-top: 60px;
+    max-width: 30vw;
+}
+
+#btnLogin {
+    color: white;
+    margin: 10px;
+    background-color: #ff2626;
+}
+#btnRegister {
+    margin: 10px;
+    color: white;   
+    background-color: #ff2626;
+}
+#btnLogin:hover {
+    background-color: #db1616;
+}
+
+#btnRegister:hover {
+    background-color: #db1616;
+}
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

@@ -1,6 +1,7 @@
 ﻿using GuarderPet.API.Data.Entities;
 using GuarderPet.API.Helpers;
 using GuarderPet.Common.Enums;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,15 +26,43 @@ namespace GuarderPet.API.Data
             await CheckBreedsAsync();
             await CheckDocumentTypesAsync();
             await CheckPetServicesAsync();
-            await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
-            await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitag@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
-            await CheckUserAsync("101012", "Stewar", "Marin", "stewarm@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
-            await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.Carer);
+            await CheckPlacesAsync();
+            await CheckUserAsync("101010", "Santiago", "Osorio", "osorio@guarderpet.com", "300 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 1");
+            await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitag@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 2");
+            await CheckUserAsync("101012", "Stewar", "Marin", "stewarm@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 3");
+            await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 1");
             await CheckUserAsync("101014", "Andres", "Arango", "aa@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101015", "Caterine", "Caminos", "catcam@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101016", "Julio", "Cesar", "julces@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101017", "Tulio", "Recomienda", "tulrec@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
             await CheckUserAsync("101018", "Pablo", "Neruda", "pabner@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
+           
+        }
+
+       
+
+        private async Task CheckPlacesAsync()
+        {
+            _context.Places.Add(new Place
+            {
+                PlaceName = "Guarderia 1",
+                Direction = "Calle 3 #4 - 5",
+               
+            });
+
+            _context.Places.Add(new Place
+            {
+                PlaceName = "Guarderia 2",
+                Direction = "Calle 6 #7 - 9",
+
+            });
+            _context.Places.Add(new Place
+            {
+                PlaceName = "Guarderia 3",
+                Direction = "Calle 10 #11 - 12",
+
+            });
+
         }
 
         private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
@@ -52,6 +81,32 @@ namespace GuarderPet.API.Data
                     PhoneNumber = phoneNumber,
                     UserName = email,
                     UserType = userType
+                };
+
+                await _userHelper.AddUserAsync(user, "Pruebas123456");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+            }
+        }
+        private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType, string place)
+        {
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Address = address,
+                    Document = document,
+                    DocumentType = _context.DocumentTypes.FirstOrDefault(x => x.Type == "Cédula"),
+                    Email = email,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    PhoneNumber = phoneNumber,
+                    UserName = email,
+                    UserType = userType,
+                    Place = _context.Places.FirstOrDefault(x => x.PlaceName == place)
                 };
 
                 await _userHelper.AddUserAsync(user, "Pruebas123456");

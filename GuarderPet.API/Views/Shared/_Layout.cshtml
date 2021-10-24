@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - GuarderPet.API</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/auxStyles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
@@ -56,7 +56,7 @@
                         }
                         else
                         {
-                            <li><a asp-area="" asp-controller="Account" asp-action="Login">Iniciar Sesión</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Iniciar Sesión</a></li>
                         }
                     </ul>
                 </div>
@@ -64,14 +64,14 @@
         </nav>
     </header>
     <div style="position: absolute; display: flex; justify-content: flex-end; width: 100%; margin-top: 0;">
-        <div id="userMenu" style="border:none">
-            <ul>
+        <div id="userMenu" >
+            <ul class="navbar-nav">
                 @if (User.Identity.IsAuthenticated && User.IsInRole("Carer"))
                 {
                  <li> Carer </li>
                 }
-                <li ><a asp-area="" asp-controller="Account" asp-action="ChangeUser" style="color: black;">@User.Identity.Name</a></li>
-                <li ><a asp-area="" asp-controller="Account" asp-action="Logout" style="color: black;">Cerrar Sesión</a></li>
+                <li  class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="ChangeUser" style="color: black; padding:10px; color:black; margin: 5px;">@User.Identity.Name</a></li>
+                <li  class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout" style="color: black; padding: 10px; color: black; margin: 5px; ">Cerrar Sesión</a></li>
             </ul>
         </div>
     </div>

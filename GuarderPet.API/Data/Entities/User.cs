@@ -44,5 +44,8 @@ namespace GuarderPet.API.Data.Entities
 
         [Display(Name = "# Mascotas")]
         public int PetsCount => Pets == null ? 0 : Pets.Count;
+
+        [Display(Name = "Place")]
+        public Place Place { get; set; }
     }
 }

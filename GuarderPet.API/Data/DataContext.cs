@@ -19,6 +19,7 @@ namespace GuarderPet.API.Data
         public DbSet<Breed> Breeds { get; set; }
         public DbSet<PetServiceHistory> PetServiceHistories { get; set; }
         public DbSet<Place> Places { get; set; }
+        public DbSet<PlacePhoto> placePhotos { get; set; }
         public DbSet<CareDescription> CareDescriptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
