@@ -11,10 +11,6 @@ namespace GuarderPet.API.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Usuario")]
-        [JsonIgnore]
-        public ICollection<User> Users { get; set; }
-
         [Display(Name = "Nombre Lugar")]
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

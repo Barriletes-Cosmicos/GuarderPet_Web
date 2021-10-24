@@ -35,7 +35,7 @@
                                 @Html.DisplayNameFor(model => model.PhoneNumber)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Place)
+                                @Html.DisplayNameFor(model => model.Place.PlaceName)
                             </th>
                             <th>
                                 Numero de mascotas
@@ -65,10 +65,10 @@
                                 @Html.DisplayFor(modelItem => item.PhoneNumber)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PetsCount)
+                                @Html.DisplayFor(modelItem => item.Place.PlaceName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Place)
+                                @Html.DisplayFor(modelItem => item.PetsCount)
                             </td>
                             <td style="display: flex">
                                 <a asp-action="Edit" asp-route-id="@item.Id" style="align-items:center"><img src="~/images/edit.png" alt="edit" style="width:25px; margin-right: 5px" /></a>
