@@ -31,11 +31,11 @@ namespace GuarderPet.API.Data
             await CheckUserAsync("101011", "Lucas", "Giraldo", "lukitag@guarderpet.com", "301 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 2");
             await CheckUserAsync("101012", "Stewar", "Marin", "stewarm@guarderpet.com", "302 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 3");
             await CheckUserAsync("101013", "Zulu", "El Profe", "zulu@guarderpet.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.Carer, "Guarderia 1");
-            await CheckUserAsync("101014", "Andres", "Arango", "aa@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
-            await CheckUserAsync("101015", "Caterine", "Caminos", "catcam@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User);
-            await CheckUserAsync("101016", "Julio", "Cesar", "julces@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
-            await CheckUserAsync("101017", "Tulio", "Recomienda", "tulrec@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
-            await CheckUserAsync("101018", "Pablo", "Neruda", "pabner@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User);
+            await CheckUserAsync("101014", "Andres", "Arango", "aa@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User, "Guarderia 3");
+            await CheckUserAsync("101015", "Caterine", "Caminos", "catcam@yopmail.com", "303 123 4567", "Calle 1 # 2 - 3", UserType.User, "Guarderia 1");
+            await CheckUserAsync("101016", "Julio", "Cesar", "julces@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User, "Guarderia 2");
+            await CheckUserAsync("101017", "Tulio", "Recomienda", "tulrec@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User, "Guarderia 1");
+            await CheckUserAsync("101018", "Pablo", "Neruda", "pabner@yopmail.com", "304 123 4567", "Calle 1 # 2 - 3", UserType.User, "Guarderia 3");
            
         }
 
@@ -43,54 +43,32 @@ namespace GuarderPet.API.Data
 
         private async Task CheckPlacesAsync()
         {
-           _context.Places.Add(new Place
+            if (!_context.Places.Any())
             {
-                PlaceName = "Guarderia 1",
-                Direction = "Calle 3 #4 - 5",
-               
-            });
-
-            _context.Places.Add(new Place
-            {
-                PlaceName = "Guarderia 2",
-                Direction = "Calle 6 #7 - 9",
-
-            });
-            _context.Places.Add(new Place
-            {
-                PlaceName = "Guarderia 3",
-                Direction = "Calle 10 #11 - 12",
-
-            });
-
-            await _context.SaveChangesAsync();
-        }
-
-        private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
-        {
-            User user = await _userHelper.GetUserAsync(email);
-            if (user == null)
-            {
-                user = new User
+                _context.Places.Add(new Place
                 {
-                    Address = address,
-                    Document = document,
-                    DocumentType = _context.DocumentTypes.FirstOrDefault(x => x.Type == "Cédula"),
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    PhoneNumber = phoneNumber,
-                    UserName = email,
-                    UserType = userType
-                };
+                    PlaceName = "Guarderia 1",
+                    Direction = "Calle 3 #4 - 5",
 
-                await _userHelper.AddUserAsync(user, "Pruebas123456");
-                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+                });
 
-                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                await _userHelper.ConfirmEmailAsync(user, token);
+                _context.Places.Add(new Place
+                {
+                    PlaceName = "Guarderia 2",
+                    Direction = "Calle 6 #7 - 9",
+
+                });
+                _context.Places.Add(new Place
+                {
+                    PlaceName = "Guarderia 3",
+                    Direction = "Calle 10 #11 - 12",
+
+                });
+
+                await _context.SaveChangesAsync();
             }
         }
+
         private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType, string place)
         {
             User user = await _userHelper.GetUserAsync(email);

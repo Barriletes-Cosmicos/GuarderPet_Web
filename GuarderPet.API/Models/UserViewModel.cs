@@ -54,5 +54,7 @@ namespace GuarderPet.API.Models
         public int DocumentTypeId { get; set; }
 
         public IEnumerable<SelectListItem> DocumentTypes { get; set; }
+
+        public IEnumerable<SelectListItem> Place { get; set; }
     }
 }

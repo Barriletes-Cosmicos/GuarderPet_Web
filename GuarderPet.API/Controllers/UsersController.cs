@@ -38,6 +38,7 @@ namespace GuarderPet.API.Controllers
             return View(await _context.Users
                 .Include(x => x.DocumentType)
                 .Include(x => x.Pets)
+                .Include(x => x.Place)
                 .Where(x => x.UserType == UserType.User)
                 .ToListAsync());
         }
@@ -46,7 +47,8 @@ namespace GuarderPet.API.Controllers
         {
             UserViewModel model = new UserViewModel
             {
-                DocumentTypes = _combosHelper.GetComboDocumentTypes()
+                DocumentTypes = _combosHelper.GetComboDocumentTypes(),
+                Place = _combosHelper.GetComboPlaces()
             };
 
             return View(model);
@@ -78,6 +80,7 @@ namespace GuarderPet.API.Controllers
             }
 
             model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+            model.Place = _combosHelper.GetComboPlaces();
             return View(model);
         }
 
@@ -110,6 +113,7 @@ namespace GuarderPet.API.Controllers
             }
 
             model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+            model.Place = _combosHelper.GetComboPlaces();
             return View(model);
         }
 
@@ -148,6 +152,8 @@ namespace GuarderPet.API.Controllers
                 .ThenInclude(x => x.PetType)
                 .Include(x => x.Pets)
                 .ThenInclude(x => x.PetPhotos)
+                .Include(x => x.Place)
+                .ThenInclude(x => x.PlaceName)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {

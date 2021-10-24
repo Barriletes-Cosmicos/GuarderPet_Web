@@ -75,7 +75,24 @@ namespace GuarderPet.API.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione un tipo de vehiculo...]",
+                Text = "[Seleccione un tipo de mascota...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public IEnumerable<SelectListItem> GetComboPlaces()
+        {
+            List<SelectListItem> list = _context.Places.Select(x => new SelectListItem
+            {
+                Text = x.PlaceName,
+                Value = $"{x.Id}",
+            }).OrderBy(x => x.Text).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un lugar...]",
                 Value = "0"
             });
 
