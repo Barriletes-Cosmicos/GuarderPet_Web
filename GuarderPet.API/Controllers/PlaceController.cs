@@ -72,9 +72,9 @@ namespace GuarderPet.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, PetService petService)
+        public async Task<IActionResult> Edit(int id, Place place)
         {
-            if (id != petService.Id)
+            if (id != place.Id)
             {
                 return NotFound();
             }
@@ -83,7 +83,7 @@ namespace GuarderPet.API.Controllers
             {
                 try
                 {
-                    _context.Update(petService);
+                    _context.Update(place);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -103,7 +103,7 @@ namespace GuarderPet.API.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(petService);
+            return View(place);
         }
 
         public async Task<IActionResult> Delete(int? id)
