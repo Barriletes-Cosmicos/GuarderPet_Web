@@ -75,7 +75,8 @@ namespace GuarderPet.API.Helpers
                 Id = user.Id,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                UserType = user.UserType
+                UserType = user.UserType,
+                Place = _combosHelper.GetComboPlaces()
             };
         }
 

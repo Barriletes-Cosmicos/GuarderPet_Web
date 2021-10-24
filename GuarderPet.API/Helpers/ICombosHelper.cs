@@ -9,5 +9,6 @@ namespace GuarderPet.API.Helpers
         IEnumerable<SelectListItem> GetComboPetServices();
         IEnumerable<SelectListItem> GetComboPetTypes();
         IEnumerable<SelectListItem> GetComboBreeds();
+        IEnumerable<SelectListItem> GetComboPlaces();
     }
 }

@@ -14,7 +14,7 @@
 <body style="background-color: #FFE6E6;">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background-color: white;">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand text-dark brand" asp-area="" asp-controller="Home" asp-action="Index">
                     GuarderPet<img src="~/images/logoGuarder.png" alt="Logo" style="height: 60px" />
                 </a>
@@ -29,6 +29,9 @@
 
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Places" asp-action="Index">Lugares</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="PetServices" asp-action="Index">Servicios de mascota</a>
