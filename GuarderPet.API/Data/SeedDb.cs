@@ -43,7 +43,7 @@ namespace GuarderPet.API.Data
 
         private async Task CheckPlacesAsync()
         {
-            _context.Places.Add(new Place
+           _context.Places.Add(new Place
             {
                 PlaceName = "Guarderia 1",
                 Direction = "Calle 3 #4 - 5",
@@ -63,6 +63,7 @@ namespace GuarderPet.API.Data
 
             });
 
+            await _context.SaveChangesAsync();
         }
 
         private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
