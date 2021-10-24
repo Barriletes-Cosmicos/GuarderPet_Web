@@ -15,12 +15,18 @@ namespace GuarderPet.API.Data.Entities
         [JsonIgnore]
         public User User { get; set; }
 
+        [Display(Name = "Nombre Lugar")]
+        [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string PlaceName { get; set; }
+
+
         [Display(Name = "Direccion")]
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string direction { get; set; }
+        public string Direction { get; set; }
 
-        //[Display(Name = "Fotos")]
-        //public ICollection<PhotoPlace> Photos { get; set; }
+        [Display(Name = "Fotos")]
+        public ICollection<PlacePhoto> Photos { get; set; }
     }
 }
